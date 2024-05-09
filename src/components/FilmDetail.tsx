@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const FilmDetail = async({data}:any) => {
-// console.log(data?.modified)
   return (
     <Link href={`/film/${data?.slug}`} className='flex flex-col py-2 h-[400px] items-center cursor-pointer hover:text-[#f23f51]'>
       <div className=' w-[180px] overflow-hidden rounded-sm h-[260px]'>

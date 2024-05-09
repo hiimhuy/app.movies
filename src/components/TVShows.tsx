@@ -6,7 +6,7 @@ import { IDescription, IMovie } from "../model/type";
 import CardFilm from "./CardFilm";
 
 
-const getData = async () => {
+export const getDataTVShows = async () => {
   const response = await fetch(`${URL}/v1/api/danh-sach/tv-shows`);
   if (!response.ok) {
     throw new Error("error");
@@ -15,7 +15,7 @@ const getData = async () => {
 };
 
 const TVShows = async () => {
-  const data :IMovie = await getData();
+  const data :IMovie = await getDataTVShows();
   // console.log("data", data.data);
 
   return <div className="mt-2">

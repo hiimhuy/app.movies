@@ -5,7 +5,7 @@ import FilmDetail from "./FilmDetail";
 import Link from "next/link";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
-const getData = async () => {
+export const getDataNewUpdate = async () => {
   const response = await fetch(`${URL}/danh-sach/phim-moi-cap-nhat?page=1`);
   if (!response.ok) {
     throw new Error("error");
@@ -14,8 +14,7 @@ const getData = async () => {
 };
 
 const FilmSlide = async () => {
-  const data: CardFilm = await getData();
-  // console.log("data", data);
+  const data: CardFilm = await getDataNewUpdate();
 
   return (
     <div className="pt-32">

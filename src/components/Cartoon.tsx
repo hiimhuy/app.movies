@@ -5,7 +5,7 @@ import Link from "next/link";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import CardFilm from "./CardFilm";
 
-const getData = async () => {
+export const getDataCartoon = async () => {
   const response = await fetch(`${URL}/v1/api/danh-sach/hoat-hinh`);
   if (!response.ok) {
     throw new Error("error");
@@ -14,7 +14,7 @@ const getData = async () => {
 };
 
 const Cartoon = async () => {
-  const data: IMovie = await getData();
+  const data: IMovie = await getDataCartoon();
   console.log("data", data);
 
   return (
