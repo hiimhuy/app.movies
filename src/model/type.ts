@@ -49,19 +49,18 @@ export interface IMovie {
     //   },
     //   { name: 'Trang 1', isCurrent: true, position: 3 }
     // ]
-    params:{
-      type_slug: string,
-      filterCategory: [],
-      filterCountry: [],
-      filterYear: string,
-      filterType: string,
-      sortField: string,
-      sortType: string,
-      pagination: Pagination
-    }
+    params: {
+      type_slug: string;
+      filterCategory: [];
+      filterCountry: [];
+      filterYear: string;
+      filterType: string;
+      sortField: string;
+      sortType: string;
+      pagination: Pagination;
+    };
   };
 }
-
 
 export interface IDescription {
   modified: {}[];
@@ -81,4 +80,55 @@ export interface IDescription {
   lang: string;
   category: [];
   country: [];
+}
+
+export interface IFilmDetail {
+  episodes: {
+    server_data: {
+      filename: string;
+      link_embed: string;
+      link_m3u8: string;
+      name: string;
+      slug: string;
+    }[];
+    server_name: string;
+  }[];
+  movie: {
+    actor: [];
+    category: {
+      id: string;
+      name: string;
+      slug: string;
+    }[];
+    chieurap: boolean;
+    content: string;
+    country: {
+      id: string;
+      name: string;
+      slug: string;
+    }[];
+    director: [];
+    episode_current: string;
+    episode_total: string;
+    is_copyright: boolean;
+    lang: string;
+    modified: {
+      time: string;
+    };
+    name: string;
+    notify: string;
+    origin_name: string;
+    poster_url: string;
+    quality: string;
+    showtimes: string;
+    slug: string;
+    status: string;
+    sub_docquyen: boolean;
+    thumb_url: string;
+    time: string;
+    trailer_url: string;
+    type: string;
+    year: number;
+    _id: string;
+  };
 }
