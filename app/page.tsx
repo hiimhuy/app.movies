@@ -10,13 +10,15 @@ import TVShows from "@/src/components/TVShows";
 
 export default function Home() {
   return (
-    <Container>
-      <Header/>
-      <NewUpdate />
-      <SingleMovie/>
-      <SeriesMovies/>
-      <Cartoon/>
-      <TVShows/>
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <NewUpdate />
+        <SingleMovie />
+        <SeriesMovies />
+        <Cartoon />
+        <TVShows />
+      </Container>
+    </>
   );
 }
