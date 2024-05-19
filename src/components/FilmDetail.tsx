@@ -22,14 +22,14 @@ const FilmDetail = ({ data }: FilmDetailProps) => {
         />
       </div>
      <div className='flex flex-col md:w-[40%] h-[285px] w-[210px] md:h-full md:py-8'>
-        <p className="px-2 my-2 text-lg md:text-4xl font-bold text-[#f23f51]">
+        <p className="px-2 my-2 text-2xl md:text-4xl font-bold text-[#f23f51]">
           {data?.name}
         </p>
         <p className="px-2 my-2 md:text-base text-sm font-semibold overflow-hidden">
           {data?.origin_name}
         </p>
         <p className="px-2 my-2 text-sm w-[180px] overflow-hidden line-clamp-1">{data?.year}</p>
-     <Link href={`/movie/${data?.slug}`} className='flex mx-2 items-center justify-center text-xl px-2 my-2 bg-[#f32f51] hover:bg-red-700 h-10 w-28 font-bold  text-white'>Xem ngay</Link>
+     <Link href={`/movie/${data?.slug}`} className='flex mx-2 items-center justify-center text-sm rounded-sm md:text-xl px-2 my-2 bg-[#f32f51] hover:bg-red-700 h-10 w-28 font-bold  text-white'>Xem ngay</Link>
      </div>
     </div>
   );
