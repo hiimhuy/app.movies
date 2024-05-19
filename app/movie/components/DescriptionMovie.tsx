@@ -3,7 +3,7 @@ import React from 'react'
 
 const DescriptionMovie = ({data}:any) => {
   return (
-    <div className="md:flex flex flex-col items-center gap-8">
+    <div className="md:flex md:flex-row md:justify-between flex flex-col items-center gap-8">
     <Image
       src={data?.movie.poster_url || ""}
       height={450}
