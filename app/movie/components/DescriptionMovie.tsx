@@ -3,7 +3,7 @@ import React from 'react'
 
 const DescriptionMovie = ({data}:any) => {
   return (
-    <div><div className="flex gap-8">
+    <div className="flex gap-8">
     <Image
       src={data?.movie.poster_url || ""}
       height={450}
@@ -67,7 +67,7 @@ const DescriptionMovie = ({data}:any) => {
       {/* <Link className="border-2 border-white text-xl font-semibold hover:text-[#f23f51] hover:border-[#f23f51] rounded-sm px-3 duration-300 py-1" href={'/'}>Xem phim</Link> */}
     </div>
     </div>
-  </div></div>
+  </div>
   )
 }
 

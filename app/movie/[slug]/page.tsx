@@ -1,38 +1,27 @@
-import { URL } from "@/src/api";
-import { IFilmDetail } from "@/src/model/type";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import VideoPlayed from "./components/VideoPlayed";
-import DescriptionMovie from "./components/DescriptionMovie";
-import Head from "next/head";
+'use client'
 
-const getData = async (slug: string) => {
-  const response = await fetch(`${URL}/phim/${slug}`);
-  if (!response.ok) {
-    throw new Error("error");
-  }
-  return response.json();
-};
+import { getDataMovie } from "@/src/api";
+import { IFilmDetail } from "@/src/model/type";
+import React, { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import DescriptionMovie from "../components/DescriptionMovie";
+import VideoPlayed from "../components/VideoPlayed";
 
 const FilmDetail = () => {
-  const router = useRouter();
-  const { slug } = router.query;
+  const { slug } = useParams()
   const [data, setData] = useState<IFilmDetail | null>(null);
   const [selectedEpisode, setSelectedEpisode] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data: IFilmDetail = await getData(slug as string);
+        const data: IFilmDetail = await getDataMovie(slug as string);
         setData(data);
       } catch (error: any) {
         console.log(error);
       }
     };
-    if (slug) {
       fetchData();
-    }
   }, [slug]);
 
   const handleEpisodeClick = (episode: any) => {
@@ -40,15 +29,17 @@ const FilmDetail = () => {
   };
 
   return (
-
     <>
-     <Head>
-        <title>{selectedEpisode?.filename ? selectedEpisode?.filename : data?.movie?.name}</title>
-      </Head> 
-      <div className="h-full pt-40 text-white">
+       {/* <Head> */}
+          <title>{selectedEpisode?.filename ? data?.movie?.name : selectedEpisode?.filename}</title>
+          <meta name="description" content={data?.movie?.content} />
+        {/* </Head>  */}
+          
+      {data?.episodes ?
+      <div className="h-full text-white">
         <DescriptionMovie data={data} />
         <div className="py-4">
-          <div>
+           <div>
             {data?.episodes?.map((item: any) => (
               <div key={item.id}>
                 <p className="py-2 font-semibold">{item?.server_name}</p>
@@ -77,6 +68,8 @@ const FilmDetail = () => {
           </div>
         )}
       </div>
+    : <div>Phim hiện không có, xin vui lòng quay lại sau!</div>  
+    }
     </>
   )
 };
