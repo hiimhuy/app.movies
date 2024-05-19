@@ -6,7 +6,7 @@ const VideoPlayed = ({ data, episodeMovie }: any) => {
 console.log(episodeMovie)
   return (
       <div className="flex justify-center">
-        <div className="flex flex-col justify-center h-[650px] w-[900px]">
+        <div className="flex flex-col px-4 justify-center py-3 md:h-[650px] md:w-[900px]">
           {episodeMovie && (
             <div>
               <ReactPlayer

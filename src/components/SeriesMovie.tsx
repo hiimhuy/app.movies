@@ -11,7 +11,7 @@ const SeriesMovies = async () => {
   return <div className="mt-2">
   <div className="flex justify-between items-end my-1">
     <h1 className="text-white font-semibold py-1 text-xl">Phim bộ</h1>
-    <Link href={"/SeriesMovies"} className="text-sm hover:text-[#f23f51]">
+    <Link href={"/series"} className="text-sm hover:text-[#f23f51]">
       Xem tất cả <ArrowRightAltIcon />
     </Link>
   </div>
