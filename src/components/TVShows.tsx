@@ -1,27 +1,18 @@
 import React from "react";
-import { URL } from "../api";
+import { getDataTVShows } from "../api";
 import Link from "next/link";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import { IDescription, IMovie } from "../model/type";
+import { IMovie } from "../model/type";
 import CardFilm from "./CardFilm";
 
 
-export const getDataTVShows = async () => {
-  const response = await fetch(`${URL}/v1/api/danh-sach/tv-shows`);
-  if (!response.ok) {
-    throw new Error("error");
-  }
-  return response.json();
-};
-
 const TVShows = async () => {
-  const data :IMovie = await getDataTVShows();
-  // console.log("data", data.data);
+  const data :IMovie = await getDataTVShows(1, 10);
 
   return <div className="mt-2">
   <div className="flex justify-between items-end my-1">
     <h1 className="text-white font-semibold py-1 text-xl">Phim bộ</h1>
-    <Link href={"/TVShows"} className="text-sm hover:text-[#f23f51]">
+    <Link href={"/TVShows"} className="text-sm hover:text-[#f23f51] text-white">
       Xem tất cả <ArrowRightAltIcon />
     </Link>
   </div>

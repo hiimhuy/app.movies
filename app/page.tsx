@@ -11,14 +11,11 @@ import TVShows from "@/src/components/TVShows";
 export default function Home() {
   return (
     <>
-      <Header />
-      <Container>
         <NewUpdate />
         <SingleMovie />
         <SeriesMovies />
         <Cartoon />
         <TVShows />
-      </Container>
     </>
   );
 }

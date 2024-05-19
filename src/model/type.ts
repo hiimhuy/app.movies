@@ -40,15 +40,15 @@ export interface IMovie {
     };
     items: DescriptionFilm[];
     titlePage: string;
-    // breadCrumb: [
-    //   {
-    //     name: 'Phim Lẻ',
-    //     slug: '/danh-sach/phim-le',
-    //     isCurrent: false,
-    //     position: 2
-    //   },
-    //   { name: 'Trang 1', isCurrent: true, position: 3 }
-    // ]
+    breadCrumb: 
+      {
+        name: string;
+        slug: string;
+        isCurrent: boolean;
+        position: number;
+      }
+      // { name: string; isCurrent: boolean; position: number }
+    
     params: {
       type_slug: string;
       filterCategory: [];
@@ -131,4 +131,10 @@ export interface IFilmDetail {
     year: number;
     _id: string;
   };
+}
+
+export interface ICountryAndCategory {
+  _id: string;
+  name: string;
+  slug: string;
 }
