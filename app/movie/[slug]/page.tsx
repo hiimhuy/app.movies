@@ -38,7 +38,7 @@ const FilmDetail = () => {
       {data?.episodes ?
       <div className="h-full text-white">
         <DescriptionMovie data={data} />
-        <div className="py-4">
+        <div className="p-4">
            <div>
             {data?.episodes?.map((item: any) => (
               <div key={item.id}>

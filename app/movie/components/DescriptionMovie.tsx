@@ -3,20 +3,20 @@ import React from 'react'
 
 const DescriptionMovie = ({data}:any) => {
   return (
-    <div className="flex gap-8">
+    <div className="md:flex flex flex-col items-center gap-8">
     <Image
       src={data?.movie.poster_url || ""}
       height={450}
       width={350}
       priority
       alt="."
-      className="rounded-sm h-[450px] w-[350px]"
+      className="rounded-sm md:h-[450px] md:w-[350px] h-80 w-64"
     />
-    <div className="text-sm">
+    <div className="text-sm px-6">
       <h1 className="text-4xl font-semibold text-[#f23f51]">
         {data?.movie?.name}
       </h1>
-      <h4 className="font-semibold py-3">
+      <h4 className="font-semibold text-2xl py-3">
         Đạo diễn: {data?.movie?.director?.map((direct: string) => direct)}
       </h4>
       <div className="flex gap-5">
@@ -63,7 +63,7 @@ const DescriptionMovie = ({data}:any) => {
         {data?.movie.status === "ongoing" ? "Đang chiếu" : "Hoàn thành"}
       </div>
       <div className="text-justify">Mô tả: {data?.movie?.content}</div>
-    <div className="my-5">
+    <div>
       {/* <Link className="border-2 border-white text-xl font-semibold hover:text-[#f23f51] hover:border-[#f23f51] rounded-sm px-3 duration-300 py-1" href={'/'}>Xem phim</Link> */}
     </div>
     </div>
