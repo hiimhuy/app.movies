@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 const DescriptionMovie = ({data}:any) => {
@@ -21,18 +22,18 @@ const DescriptionMovie = ({data}:any) => {
       </h4>
       <div className="flex gap-5">
         <p>Năm {data?.movie?.year}</p>
-        <p className="px-1 border border-[#f23f51] rounded-sm">
+        <p className="">
           {data?.movie?.quality}
         </p>
-        <p className="px-1 border border-[#f23f51] rounded-sm">
+        <p className="">
           {data?.movie?.lang}
         </p>
         <div>
         Quốc gia:{" "}
         {data?.movie?.country?.map((item: any, index: number) => (
-          <span key={item.id} className="px-1">
+          <Link href={`/country/${item.slug}`} key={item.id} className="px-1 hover:text-[#f23f51]">
             {item.name}
-          </span>
+          </Link>
         ))}
       </div>
       </div>

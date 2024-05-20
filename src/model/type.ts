@@ -38,7 +38,7 @@ export interface IMovie {
       og_image: [];
       og_url: string;
     };
-    items: DescriptionFilm[];
+    items: IDescription[];
     titlePage: string;
     breadCrumb: 
       {
