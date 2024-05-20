@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css'; // Import Swiper styles
 import { getDataNewUpdate } from "../api";
-import FilmDetail from "./FilmDetail";
+import FilmDetail from "./SlideFilm";
 import { CardFilm, DescriptionFilm } from "../model/type";
 import { EffectCoverflow, Autoplay } from "swiper/modules";
 

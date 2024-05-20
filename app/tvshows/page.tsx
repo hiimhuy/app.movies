@@ -17,8 +17,7 @@ const TVShowsPage = () => {
      
       try {
         const response: IMovie = await getDataTVShows(currentPage, 30);
-        console.log(response);
-        setData(response.data.items);
+        setData(response.data);
         setCurrentPage(response.data.params.pagination.currentPage);
         setTotalPage(response.data.params.pagination.totalPages);
       } catch (error) {
@@ -40,20 +39,25 @@ const TVShowsPage = () => {
     }
   }, [currentPage]);
 
+
   return (
-    <div className=""  ref={scrollRef}>
-      <div className="text-white text-2xl font-bold py-3">
-        TV Shows - Trang {currentPage}
+    <>
+      <title>{data?.titlePage}</title>
+      <meta name="description" content={data?.seoOnPage?.descriptionHead} />
+      <div className=""  ref={scrollRef}>
+        <div className="text-white text-2xl font-bold py-3">
+          TV Shows - Trang {currentPage}
+        </div>
+        <div className="flex flex-wrap text-white gap-3 justify-center">
+          {data?.items?.map((item: any) => (
+            <CardFilm key={item?._id} data={item} film="phim-bo"/>
+          ))}
+        </div>
+        <div className="flex justify-center mt-5">
+          <Pagination currentPage={currentPage} totalPages={totalPage} onPageChange={handlePageChange} />
+        </div>
       </div>
-      <div className="flex flex-wrap text-white gap-3 justify-center">
-        {data?.map((item: any) => (
-          <CardFilm key={item?._id} data={item} film="phim-bo"/>
-        ))}
-      </div>
-      <div className="flex justify-center mt-5">
-        <Pagination currentPage={currentPage} totalPages={totalPage} onPageChange={handlePageChange} />
-      </div>
-    </div>
+    </>
   );
 };
 

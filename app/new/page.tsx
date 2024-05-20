@@ -1,7 +1,7 @@
 'use client'
 
 import { getDataNewUpdate } from "@/src/api";
-import FilmDetail from "@/src/components/FilmDetail";
+import FilmDetail from "@/src/components/SlideFilm";
 import Pagination from "@/src/components/Pagination";
 import { DescriptionFilm } from "@/src/model/type";
 import React, { useState, useEffect, useRef } from "react";
