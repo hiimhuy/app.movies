@@ -1,35 +1,63 @@
-import React from "react";
+'use client'
+
+import React, { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css'; // Import Swiper styles
+import { getDataNewUpdate } from "../api";
+import FilmDetail from "./SlideFilm";
 import { CardFilm, DescriptionFilm } from "../model/type";
-import { URL } from "../api";
-import FilmDetail from "./FilmDetail";
-import Link from "next/link";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import { EffectCoverflow, Autoplay } from "swiper/modules";
 
-export const getDataNewUpdate = async () => {
-  const response = await fetch(`${URL}/danh-sach/phim-moi-cap-nhat?page=1`);
-  if (!response.ok) {
-    throw new Error("error");
-  }
-  return response.json();
-};
+const FilmSlide = () => {
+  const [data, setData] = useState<CardFilm | null>(null);
 
-const FilmSlide = async () => {
-  const data: CardFilm = await getDataNewUpdate();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data: CardFilm = await getDataNewUpdate(1, 20);
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (!data) return <div>Loading...</div>;
 
   return (
-    <div className="pt-32">
-      <div className="flex justify-between items-end my-1">
-        <h1 className="text-white font-semibold py-1 text-xl">Mới cập nhật</h1>
-        <Link href={"/NewUpdate"} className="text-sm hover:text-[#f23f51]">
-          Xem tất cả <ArrowRightAltIcon />
-        </Link>
-      </div>
-      <div className="flex flex-wrap gap-3 justify-center">
-      {data?.items?.slice(0, 6).map((item: DescriptionFilm) => (
-          <FilmDetail key={item?._id} data={item} />
-        ))}
+    <div className="md:h-screen">
+      <div className="flex flex-wrap md:h-full md:w-full gap-4 justify-center">
+        <Swiper
+          effect={'coverflow'}
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView={'auto'}
+          autoplay={{
+            delay: 3500,
+            disableOnInteraction: false,
+          }}
+          speed={1500}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }}
+          pagination={{ clickable: true }}
+          modules={[EffectCoverflow, Autoplay]}
+          className="mySwiper"
+        >
+          {data.items.map((item: DescriptionFilm) => (
+            <SwiperSlide key={item._id}>
+              <FilmDetail data={item} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </div>
   );
 };
+
 export default FilmSlide;
