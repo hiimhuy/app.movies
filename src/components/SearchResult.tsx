@@ -4,7 +4,6 @@ import { DescriptionFilm } from '../model/type';
 import Image from 'next/image';
 
 const SearchResults = ({ results, onClick }:any) => {
-  console.log(results)
   return (
     <div className="flex flex-col gap-2 h-full">
       {results?.data?.items?.slice(0,6)?.map((result:DescriptionFilm) => (

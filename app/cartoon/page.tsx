@@ -16,7 +16,6 @@ const CartoonPage = () => {
     const fetchData = async () => {
       try {
         const response: IMovie = await getDataCartoon(currentPage, 30);
-        console.log(response);
         setData(response.data);
         setCurrentPage(response.data.params.pagination.currentPage);
         setTotalPage(response.data.params.pagination.totalPages);

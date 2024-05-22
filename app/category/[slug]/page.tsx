@@ -17,7 +17,7 @@ const CategoryPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response: IMovie = await getDataDetailCategory(slug, 1, 30);
+      const response: IMovie = await getDataDetailCategory(slug, currentPage, 30);
       setData(response.data);
       setCurrentPage(response.data.params.pagination.currentPage);
       setTotalPage(response.data.params.pagination.totalPages);
@@ -25,12 +25,12 @@ const CategoryPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
-  console.log(data);
+  
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });

@@ -17,7 +17,7 @@ const CountryPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response: IMovie = await getDataDetailCountry(slug, 1, 30);
+      const response: IMovie = await getDataDetailCountry(slug, currentPage, 30);
       setData(response.data);
       setCurrentPage(response.data.params.pagination.currentPage);
       setTotalPage(response.data.params.pagination.totalPages);
@@ -26,7 +26,7 @@ const CountryPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
