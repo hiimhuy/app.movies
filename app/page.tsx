@@ -1,6 +1,6 @@
 // import FilmDetail from "@/src/components/FilmDetail";
 import NewUpdate from "@/src/components/NewUpdate";
-import Header from "@/src/components/Header";
+import Header from "@/src/components/Navbar";
 import "./globals.css";
 import Container from "@/src/components/Container";
 import SingleMovie from "@/src/components/SingleMovie";
