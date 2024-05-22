@@ -7,7 +7,6 @@ import CardFilm from "./CardFilm";
 
 const Cartoon = async () => {
   const data: IMovie = await getDataCartoon(1, 10);
-  console.log("data", data);
 
   return (
     <div className="pt-2">

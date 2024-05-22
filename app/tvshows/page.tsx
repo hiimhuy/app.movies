@@ -32,7 +32,6 @@ const TVShowsPage = () => {
     setCurrentPage(page);
   };
 
-  console.log(data)
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });

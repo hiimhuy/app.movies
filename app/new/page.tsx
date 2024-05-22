@@ -16,7 +16,6 @@ const NewUpdatePage = () => {
     const fetchData = async () => {
       try {
         const response:any = await getDataNewUpdate(currentPage,30);
-        console.log(response);
         setData(response.items);
         setCurrentPage(response.pagination.currentPage);
         setTotalPage(response.pagination.totalPages);

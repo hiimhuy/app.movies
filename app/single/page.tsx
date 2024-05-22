@@ -16,7 +16,6 @@ const SingleMoviesPage = () => {
     const fetchData = async () => {
       try {
         const response: IMovie = await getDataSingleMovies(currentPage, 30);
-        console.log(response);
         setData(response.data);
         setCurrentPage(response.data.params.pagination.currentPage);
         setTotalPage(response.data.params.pagination.totalPages);

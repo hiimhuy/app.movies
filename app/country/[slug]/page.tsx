@@ -26,7 +26,7 @@ const CountryPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);

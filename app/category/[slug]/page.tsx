@@ -25,12 +25,12 @@ const CategoryPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
-  console.log(data);
+  
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
