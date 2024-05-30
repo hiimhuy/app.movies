@@ -16,7 +16,7 @@ const SingleMovie = async () => {
     </Link>
   </div>
   <div className="flex flex-wrap gap-3 justify-center">
-    {data?.data?.items?.slice(0,6)?.map((item) => (
+    {data?.data?.items?.slice(0,6).map((item) => (
       <CardFilm key={item?._id} data={item} film={'phim-le'} />
     ))}
   </div>

@@ -49,7 +49,6 @@ const NewUpdatePage = () => {
           ))}
         </div>
         <div className="flex justify-center mt-5">
-        <Pagination currentPage={currentPage} totalPages={totalPage} onPageChange={handlePageChange} />
       </div>
       </div>
     </div>

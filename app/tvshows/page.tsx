@@ -1,59 +1,47 @@
 'use client'
 
-import { getDataTVShows } from '@/src/api';
+import React, { useEffect,  } from 'react';
 import CardFilm from '@/src/components/CardFilm';
 import Pagination from '@/src/components/Pagination';
-import { IMovie } from '@/src/model/type';
-import React, { useEffect, useRef, useState } from 'react'
+import { useCounterStore } from '@/src/providers/counter-store-provider';
 
-const TVShowsPage = () => {
-  const [data, setData] = useState<any>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    const fetchData = async () => {
-     
-      try {
-        const response: IMovie = await getDataTVShows(currentPage, 30);
-        setData(response.data);
-        setCurrentPage(response.data.params.pagination.currentPage);
-        setTotalPage(response.data.params.pagination.totalPages);
-      } catch (error) {
-        console.error("Lỗi khi lấy dữ liệu:", error);
-      }
-    };
+const TVShowsPage: React.FC = () => {
+  const { data, loading, error, fetchDataTVShows, page, setPage, setPrevPage, setNextPage } = useCounterStore((state) => ({
+    data: state.data?.data,
+    loading: state.loading,
+    error: state.error,
+    fetchDataTVShows: state.fetchDataTVShows,
+    page: state.page,
+    setPage: state.setPage,
+    setPrevPage: state.setPrevPage,
+    setNextPage: state.setNextPage,
+  }));
 
-    fetchData();
-  }, [currentPage]);
-  
-  const handlePageChange = (page:number) => {
-    setCurrentPage(page);
-  };
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [currentPage]);
-
+  useEffect(()=>{
+    fetchDataTVShows()
+  },[page])
 
   return (
     <>
       <title>{data?.titlePage}</title>
       <meta name="description" content={data?.seoOnPage?.descriptionHead} />
-      <div className=""  ref={scrollRef}>
+      <div>
         <div className="text-white text-2xl font-bold py-3">
-          TV Shows - Trang {currentPage}
+          TV Shows - Page {page}
         </div>
         <div className="flex flex-wrap text-white gap-3 justify-center">
-          {data?.items?.map((item: any) => (
-            <CardFilm key={item?._id} data={item} film="phim-bo"/>
-          ))}
+          {loading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <div className='text-red-600'>Error: {error}</div>
+          ) : (
+            data?.items?.map((item: any) => (
+              <CardFilm key={item?._id} data={item} film="phim-bo" />
+            ))
+          )}
         </div>
         <div className="flex justify-center mt-5">
-          <Pagination currentPage={currentPage} totalPages={totalPage} onPageChange={handlePageChange} />
+          <Pagination currentPage={page} totalPages={data?.params?.pagination?.totalPages || 1} onPageChange={setPage} nextPage={setNextPage} prevPage={setPrevPage} />
         </div>
       </div>
     </>

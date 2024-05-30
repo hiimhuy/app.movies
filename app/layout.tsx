@@ -4,6 +4,7 @@ import "./globals.css";
 import Container from "@/src/components/Container";
 import Header from "@/src/components/Header";
 import AppContainer from "@/src/components/AppContainer";
+import { CounterStoreProvider } from "@/src/providers/counter-store-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans bg-[#080808] text-white ${inter.className}`}>
-        <Header />
-        <Container>
-          <AppContainer>{children}</AppContainer>
-        </Container>
+        <CounterStoreProvider>
+          <Header />
+          <Container>
+            <AppContainer>{children}</AppContainer>
+          </Container>
+        </CounterStoreProvider>
       </body>
     </html>
   );
