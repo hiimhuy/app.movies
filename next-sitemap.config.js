@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: 'https://https://ofilm.vercel.app/.com',
+  siteUrl: 'https://ofilm.vercel.app/',
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [
