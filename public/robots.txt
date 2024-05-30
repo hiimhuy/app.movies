@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://https://ofilm.vercel.app/.com
+Host: https://https://ofilm.vercel.app/
 
 # Sitemaps
-Sitemap: https://https://ofilm.vercel.app/.com/sitemap.xml
+Sitemap: https://https://ofilm.vercel.app/sitemap.xml
