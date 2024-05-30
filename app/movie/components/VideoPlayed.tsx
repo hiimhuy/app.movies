@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import ReactPlayer from "react-player";
 
-const VideoPlayed = ({ data, episodeMovie }: any) => {
+const VideoPlayed = ({ episodeMovie }: any) => {
   const playerRef = useRef<ReactPlayer>(null);
   return (
       <div className="flex justify-center">
@@ -10,8 +10,7 @@ const VideoPlayed = ({ data, episodeMovie }: any) => {
             <div>
               <ReactPlayer
                 ref={playerRef}
-                playing={true}
-                // onPlay={true}
+                playing={false}
                 url={episodeMovie?.link_m3u8}
                 controls={true}
                 width="100%"

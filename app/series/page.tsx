@@ -2,56 +2,46 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import CardFilm from "@/src/components/CardFilm"; 
-import { IMovie } from "@/src/model/type";
-import { getDataSeriesMovies } from "@/src/api";
 import Pagination from "@/src/components/Pagination";
+import { useCounterStore } from "@/src/providers/counter-store-provider";
 
 const SeriesMovies = () => {
-  const [data, setData] = useState<any>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response: IMovie = await getDataSeriesMovies(currentPage, 30);
-        setData(response.data);
-        setCurrentPage(response.data.params.pagination.currentPage);
-        setTotalPage(response.data.params.pagination.totalPages);
-      } catch (error) {
-        console.error("Lỗi khi lấy dữ liệu:", error);
-      }
-    };
+  const { data, loading, error, fetchDataSeriesMovies, page, setPage, setPrevPage, setNextPage } = useCounterStore((state) => ({
+    data: state.data?.data,
+    loading: state.loading,
+    error: state.error,
+    fetchDataSeriesMovies: state.fetchDataSeriesMovies,
+    page: state.page,
+    setPage: state.setPage,
+    setPrevPage: state.setPrevPage,
+    setNextPage: state.setNextPage,
+  }));
 
-    fetchData();
-  }, [currentPage]);
- 
-  const handlePageChange = (page:number) => {
-    setCurrentPage(page);
-  };
+  useEffect(()=>{
+    fetchDataSeriesMovies()
+  },[page])
   
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [currentPage]);
-
   return (
     <>
       <title>{data?.titlePage}</title>
       <meta name="description" content={data?.seoOnPage?.descriptionHead} />
-      <div className=""  ref={scrollRef}>
+      <div className="">
         <div className="text-white text-2xl font-bold py-3">
-          Phim bộ - Trang {currentPage}
+          Phim bộ - Trang {page}
         </div>
         <div className="flex flex-wrap text-white gap-3 justify-center">
-          {data?.items?.map((item: any) => (
-            <CardFilm key={item?._id} data={item} film="phim-bo"/>
-          ))}
+          {loading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <div className='text-red-600'>Error: {error}</div>
+          ) : (
+            data?.items?.map((item: any) => (
+              <CardFilm key={item?._id} data={item} film="phim-bo" />
+            ))
+          )}
         </div>
         <div className="flex justify-center mt-5">
-          <Pagination currentPage={currentPage} totalPages={totalPage} onPageChange={handlePageChange} />
+          <Pagination currentPage={page} totalPages={data?.params?.pagination?.totalPages || 1} onPageChange={setPage} nextPage={setNextPage} prevPage={setPrevPage} />
         </div>
       </div>
     </>

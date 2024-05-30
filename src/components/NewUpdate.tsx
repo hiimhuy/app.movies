@@ -1,26 +1,21 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.css'; // Import Swiper styles
-import { getDataNewUpdate } from "../api";
+import 'swiper/swiper-bundle.css';
 import FilmDetail from "./SlideFilm";
-import { CardFilm, DescriptionFilm } from "../model/type";
+import { DescriptionFilm } from "../model/type";
 import { EffectCoverflow, Autoplay } from "swiper/modules";
+import { useCounterStore } from "../providers/counter-store-provider";
 
 const FilmSlide = () => {
-  const [data, setData] = useState<CardFilm | null>(null);
+  const  {data, getDataSlideNewUpdate} = useCounterStore((state)=>({
+    data: state.data,
+    getDataSlideNewUpdate: state.getDataSlideNewUpdate
+  }))
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data: CardFilm = await getDataNewUpdate(1, 20);
-        setData(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
+    getDataSlideNewUpdate()
   }, []);
 
   if (!data) return <div>Loading...</div>;

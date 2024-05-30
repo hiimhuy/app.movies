@@ -1,61 +1,52 @@
 "use client";
 
-import { getDataDetailCategory } from "@/src/api";
 import CardFilm from "@/src/components/CardFilm";
 import Pagination from "@/src/components/Pagination";
-import { IMovie } from "@/src/model/type";
+import { useCounterStore } from "@/src/providers/counter-store-provider";
 import { useParams } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 
 const CategoryPage = () => {
   const { slug }: any = useParams();
-  const [data, setData] = useState<any>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [title, setTitle] = useState<string>("");
+
+  const { data, loading, error, fetchDataCategoryMovies, page, setPage, setPrevPage, setNextPage, setSlug } = useCounterStore((state) => ({
+    data: state.data?.data,
+    loading: state.loading,
+    error: state.error,
+    fetchDataCategoryMovies: state.fetchDataCategoryMovies,
+    page: state.page,
+    setPage: state.setPage,
+    setPrevPage: state.setPrevPage,
+    setNextPage: state.setNextPage,
+    setSlug: state.setSlug
+  }));
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response: IMovie = await getDataDetailCategory(slug, currentPage, 30);
-      setData(response.data);
-      setCurrentPage(response.data.params.pagination.currentPage);
-      setTotalPage(response.data.params.pagination.totalPages);
-      setTitle(response.data.titlePage);
-    };
-
-    fetchData();
-  }, [currentPage]);
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-  
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [currentPage]);
+    setSlug(slug);
+    fetchDataCategoryMovies();
+  }, [page,slug]);
 
   return (
     <>
       <title>{data?.titlePage}</title>
       <meta name="description" content={data?.seoOnPage?.descriptionHead} />
-      <div className="" ref={scrollRef}>
+      <div className="" >
         <div className="text-white text-2xl font-bold py-3">
-          Phim {title} - Trang {currentPage}
+          Phim {data?.titlePage} - Trang {page}
         </div>
         <div className="flex flex-wrap text-white gap-3 justify-center">
-          {data?.items?.map((item: any) => (
-            <CardFilm key={item?._id} data={item} film="phim-bo" />
-          ))}
+          {loading ? (
+            <div>Loading...</div>
+          ) : error ? (
+            <div className='text-red-600'>Error: {error}</div>
+          ) : (
+            data?.items?.map((item: any) => (
+              <CardFilm key={item?._id} data={item} film="phim-bo" />
+            ))
+          )}
         </div>
         <div className="flex justify-center mt-5">
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPage}
-            onPageChange={handlePageChange}
-          />
+          <Pagination currentPage={page} totalPages={data?.params?.pagination?.totalPages || 1} onPageChange={setPage} nextPage={setNextPage} prevPage={setPrevPage} />
         </div>
       </div>
     </>

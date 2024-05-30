@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
-const Pagination = ({ currentPage, totalPages, onPageChange }:any) => {
+const Pagination = ({ currentPage, totalPages, onPageChange, nextPage, prevPage }:any) => {
   const renderPageNumbers = () => {
     const pageNumbers = [];
     const delta = 2;
@@ -36,7 +36,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }:any) => {
     <div className="flex items-center justify-center my-4">
       <button
         className="px-3 py-1 mx-1 rounded disabled:opacity-50"
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={prevPage}
         disabled={currentPage === 1}
       >
         <KeyboardArrowLeft/>
@@ -44,7 +44,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }:any) => {
       {renderPageNumbers()}
       <button
         className="px-3 py-1 mx-1 rounded disabled:opacity-50"
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={nextPage}
         disabled={currentPage === totalPages}
       >
         <KeyboardArrowRight/>
@@ -57,6 +57,8 @@ Pagination.propTypes = {
   currentPage: PropTypes.number.isRequired,
   totalPages: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,
+  nextPage: PropTypes.func.isRequired,
+  prevPage: PropTypes.func.isRequired,
 };
 
 export default Pagination;

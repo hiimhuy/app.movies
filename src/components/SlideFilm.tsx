@@ -8,7 +8,6 @@ interface FilmDetailProps {
 }
 
 const FilmDetail = ({ data }: FilmDetailProps) => {
-  // console.log(data);
   return (
     <div className="flex py-2 md:w-[80%] md:h-[80%] items-center text-white">
       <div className="w-[60%] overflow-hidden rounded-sm h-full">

@@ -1,49 +1,29 @@
 'use client';
 
-import { getDataSearch } from '@/src/api';
 import Pagination from '@/src/components/Pagination';
-import { IDescription, IMovie } from '@/src/model/type';
+import { IDescription } from '@/src/model/type';
+import { useCounterStore } from '@/src/providers/counter-store-provider';
+import { Close } from '@mui/icons-material';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useRef, useState, Suspense } from 'react';
+import React, {Suspense } from 'react';
 
 const SearchPage = () => {
-  const [data, setData] = useState<IMovie | null>(null);
-  const [keyword, setKeyword] = useState<string>('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-  const query = useSearchParams();
-  const keywordPath: any = query.get('query');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response: IMovie = await getDataSearch(keywordPath, 100);
-      setData(response);
-      setTotalPage(response.data.params.pagination.totalPages);
-      setCurrentPage(response.data.params.pagination.currentPage);
-    };
-    fetchData();
-  }, [keywordPath, currentPage]);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [currentPage]);
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    router.push(`/search?query=${keywordPath}&page=${page}`);
-  };
+  const {data, getDataSearch, limit, page, keyword, setKeyword, setPage, setNextPage, setPrevPage} = useCounterStore((state) =>({
+    data: state.data,
+    keyword: state.keyword,
+    getDataSearch: state.getDataSearch,
+    limit: state.limit,
+    page: state.page,
+    setKeyword: state.setKeyword,
+    setPage: state.setPage,
+    setNextPage: state.setNextPage,
+    setPrevPage: state.setPrevPage
+  }))
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (keyword.trim()) {
-      router.push(`/search?query=${keyword}`);
-    }
+    getDataSearch(keyword, limit)
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,17 +37,20 @@ const SearchPage = () => {
       <div className='text-white'>
         <form onSubmit={handleSubmit}>
           <div className="flex gap-2">
-            <input
-              className="py-1 px-6 text-black w-full focus:outline-none focus:border-black"
-              type="text"
-              placeholder="Nhập để tìm kiếm..."
-              value={keyword}
-              onChange={handleInputChange}
-            />
+            <div className='relative w-full'>
+              <input
+                className=" py-1 px-6 text-black w-full focus:outline-none focus:border-black"
+                type="text"
+                placeholder="Nhập để tìm kiếm..."
+                value={keyword}
+                onChange={handleInputChange}
+              />
+              <Close onClick={()=> setKeyword(' ')} className='absolute z-50 text-black hover:text-[#f23f51] duration-300 cursor-pointer right-1 top-1'/>
+            </div>
             <button className='w-40 bg-[#f23f51] hover:bg-red-600' type='submit'>Tìm kiếm</button>
           </div>
         </form>
-        <p className='py-4 font-semibold text-2xl text-[#f23f51]'>{data?.data.titlePage}</p>
+        <p className='py-4 font-semibold text-2xl text-[#f23f51]'>{data?.data?.titlePage}</p>
         {data?.data.items[0] ? data?.data?.items?.map((film: IDescription) => (
           <Link key={film?._id} href={`/movie/${film?.slug}`} className='p-2'>
             <div className='flex gap-8'>
@@ -81,11 +64,9 @@ const SearchPage = () => {
             </div>
           </Link>
         )) : <p>Không tìm thấy phim!</p>}
-        {totalPage > 1 && (
-          <div className="flex justify-center mt-5">
-            <Pagination currentPage={currentPage} totalPages={totalPage} onPageChange={handlePageChange} />
-          </div>
-        )}
+          {data && <div className="flex justify-center mt-5">
+              <Pagination currentPage={page} totalPages={data?.params?.pagination?.totalPages || 1} onPageChange={setPage} nextPage={setNextPage} prevPage={setPrevPage} />
+            </div>}
       </div>
     </>
   );
