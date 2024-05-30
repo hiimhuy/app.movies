@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://https://ofilm.vercel.app/.com
+
+# Sitemaps
+Sitemap: https://https://ofilm.vercel.app/.com/sitemap.xml
