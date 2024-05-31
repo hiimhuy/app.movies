@@ -22,6 +22,8 @@ const CartoonPage = () => {
     fetchDataCartoonMovies()
   },[page])
 
+  console.log(data)
+
   return (
    <>
       <title>{data?.titlePage}</title>

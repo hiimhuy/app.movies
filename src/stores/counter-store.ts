@@ -25,6 +25,12 @@ export type FetchDataState = {
   dataCountry: any;
   dataCategory: any;
   episode: number;
+  listFavorite: {
+    slug: string;
+    _id: string;
+    poster_url: string;
+    name: string;
+  }[];
 };
 
 export type FetchDataActions = {
@@ -46,6 +52,20 @@ export type FetchDataActions = {
   getDataSlideNewUpdate: () => Promise<void>;
   getDataMovie: () => Promise<void>;
   setEpisode: (episode: number) => void;
+  getMoviesFavorite: () => void;
+  addMovieToFavorite: (movie: {
+    slug: string;
+    _id: string;
+    poster_url: string;
+    name: string;
+  }) => void;
+  deleteMovieToFavorite: (movie: {
+    slug: string;
+    _id: string;
+    poster_url: string;
+    name: string;
+  }) => void;
+  deleteAllMovies: () => void;
 };
 
 export type CounterStore = FetchDataState & FetchDataActions;
@@ -61,6 +81,7 @@ export const defaultInitState: FetchDataState = {
   dataCountry: null,
   dataCategory: null,
   episode: 1,
+  listFavorite: [],
 };
 
 export const createCounterStore = (
@@ -187,5 +208,37 @@ export const createCounterStore = (
     setLimit: () => set((state) => ({ limit: state.limit + 1 })),
     setSlug: (slug) => set({ slug }),
     setEpisode: (episode) => set({ episode }),
+    getMoviesFavorite: () => {
+      const favorites = localStorage.getItem("favoriteMovies");
+      if (favorites) {
+        set({ listFavorite: JSON.parse(favorites) });
+      }
+    },
+    addMovieToFavorite: (movie) => {
+      set((state) => {
+        const updatedFavorites = [...state.listFavorite, movie];
+        localStorage.setItem(
+          "favoriteMovies",
+          JSON.stringify(updatedFavorites)
+        );
+        return { listFavorite: updatedFavorites };
+      });
+    },
+    deleteMovieToFavorite: (movie) => {
+      set((state) => {
+        const updatedFavorites = state.listFavorite.filter(
+          (favMovie) => favMovie._id !== movie._id
+        );
+        localStorage.setItem(
+          "favoriteMovies",
+          JSON.stringify(updatedFavorites)
+        );
+        return { listFavorite: updatedFavorites };
+      });
+    },
+    deleteAllMovies: () => {
+      localStorage.removeItem("favoriteMovies");
+      set({ listFavorite: [] });
+    },
   }));
 };
