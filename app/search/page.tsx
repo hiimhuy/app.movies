@@ -51,7 +51,7 @@ const SearchPage = () => {
           </div>
         </form>
         <p className='py-4 font-semibold text-2xl text-[#f23f51]'>{data?.data?.titlePage}</p>
-        {data?.data.items[0] ? data?.data?.items?.map((film: IDescription) => (
+        {data?.data?.items[0] ? data?.data?.items?.map((film: IDescription) => (
           <Link key={film?._id} href={`/movie/${film?.slug}`} className='p-2'>
             <div className='flex gap-8'>
               <Image src={`https://img.phimapi.com/${film?.thumb_url}`} loading='lazy' height={40} width={40} alt='img' className='w-32 h-40 rounded-sm object-cover' />
@@ -59,7 +59,7 @@ const SearchPage = () => {
                 <p className='text-[#f23f51] text-xl font-semibold'>{film.name}</p>
                 <p className='font-sm'>{film?.origin_name}</p>
                 <p className='font-sm'>{film?.year}</p>
-                <p className='font-sm'>{film.country?.map((item: any) => item.name).join(', ')}</p>
+                <p className='font-sm'>{film?.country?.map((item: any) => item.name).join(', ')}</p>
               </div>
             </div>
           </Link>
