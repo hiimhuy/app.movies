@@ -21,6 +21,10 @@ const CategoryPage = () => {
     setSlug: state.setSlug
   }));
 
+  useEffect(()=>{
+    setPage(1)
+  },[])
+
   useEffect(() => {
     setSlug(slug);
     fetchDataCategoryMovies();

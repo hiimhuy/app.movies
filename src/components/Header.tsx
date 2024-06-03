@@ -5,14 +5,20 @@ import Container from "./Container";
 import Link from "next/link";
 import { ICountryAndCategory } from "../model/type";
 import { Close, Favorite, Menu, Search } from "@mui/icons-material";
-import { usePathname } from "next/navigation";
 import { useCounterStore } from "../providers/counter-store-provider";
+import { PATH_CARTOON, PATH_FAVORITE, PATH_SEARCH, PATH_SERIES, PATH_SINGLE, PATH_TVSHOWS} from "../constants";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const [isHoveredCountry, setIsHoveredCountry] = useState(false);
   const [isHoveredCategory, setIsHoveredCategory] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
-  const path = usePathname();
+
+  const path = usePathname()
+
+  const isCountry = /^\/country\//.test(path);
+  const isCategory = /^\/category\//.test(path);
+  const isSearch = /^\/search\//.test(path);
 
   const { getDataCountry, getDataCategory, dataCountry, dataCategory } = useCounterStore((state) => ({
     getDataCountry: state.getDataCountry,
@@ -25,10 +31,6 @@ const Header = () => {
     getDataCategory();
     getDataCountry();
   }, []);
-
-  const isCountry = /^\/country\//.test(path);
-  const isCategory = /^\/category\//.test(path);
-  const isSearch = /^\/search\//.test(path);
 
   return (
     <div className="bg-black w-full pt-3 pb-5 fixed z-50 roboto-regular">
@@ -45,10 +47,10 @@ const Header = () => {
               </div>
             </button>
             <div className="hidden lg:flex lg:gap-4 lg:px-12 lg:text-base lg:items-end font-semibold ">
-              <Link href={"/single"} className={path === '/single' ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> PHIM LẺ</Link>
-              <Link href={"/series"} className={path === '/series' ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> PHIM BỘ</Link>
-              <Link href={"/cartoon"} className={path === '/cartoon' ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> HOẠT HÌNH </Link>
-              <Link href={"/tvshows"} className={path === '/tvshows' ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> TV SHOWS </Link>
+              <Link href={PATH_SINGLE} className={path === PATH_SINGLE ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> PHIM LẺ</Link>
+              <Link href={PATH_SERIES} className={path === PATH_SERIES ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> PHIM BỘ</Link>
+              <Link href={PATH_CARTOON} className={path === PATH_CARTOON ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> HOẠT HÌNH </Link>
+              <Link href={PATH_TVSHOWS} className={path === PATH_TVSHOWS ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> TV SHOWS </Link>
               <div
                 onMouseEnter={() => setIsHoveredCountry(true)}
                 onMouseLeave={() => setIsHoveredCountry(false)}
@@ -95,14 +97,14 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <Link className={ path === '/favorite' ? 'hidden lg:flex text-[#f23f51]' : "hidden px-6 hover:text-[#f23f51] duration-300  lg:flex"} href={'/favorite'}><Favorite /></Link>
-          <Link className={ isSearch ? 'text-[#f23f51]' : "hidden px-6 hover:text-[#f23f51] duration-300  lg:flex"} href={'/search'}><Search /></Link>
+          <Link className={ path === PATH_FAVORITE ? 'hidden px-6 lg:flex text-[#f23f51]' : "hidden px-6 hover:text-[#f23f51] duration-300  lg:flex"} href={PATH_FAVORITE}><Favorite /></Link>
+          <Link className={ isSearch ? 'text-[#f23f51] px-6' : "hidden px-6 hover:text-[#f23f51] duration-300  lg:flex"} href={PATH_SEARCH}><Search /></Link>
           {
             openMenu && <div className="absolute flex flex-col items-start top-[70px] left-0 py-2 bg-black gap-2 w-full text-base font-semibold ">
-              <Link onClick={() => setOpenMenu(!openMenu)} href={"/single"} className={path === '/single' ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> PHIM LẺ</Link>
-              <Link onClick={() => setOpenMenu(!openMenu)} href={"/series"} className={path === '/series' ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> PHIM BỘ</Link>
-              <Link onClick={() => setOpenMenu(!openMenu)} href={"/cartoon"} className={path === '/cartoon' ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> HOẠT HÌNH </Link>
-              <Link onClick={() => setOpenMenu(!openMenu)} href={"/tvshows"} className={path === '/tvshows' ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> TV SHOW </Link>
+              <Link onClick={() => setOpenMenu(!openMenu)} href={PATH_SINGLE} className={path === PATH_SINGLE ?  `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> PHIM LẺ</Link>
+              <Link onClick={() => setOpenMenu(!openMenu)} href={PATH_SERIES} className={path === PATH_SERIES ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> PHIM BỘ</Link>
+              <Link onClick={() => setOpenMenu(!openMenu)} href={PATH_CARTOON} className={path === PATH_CARTOON ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> HOẠT HÌNH </Link>
+              <Link onClick={() => setOpenMenu(!openMenu)} href={PATH_TVSHOWS} className={path === PATH_TVSHOWS  ? `text-[#f23f51] px-2` : `duration-300 px-2 text-white hover:text-[#f23f51]`}> TV SHOW </Link>
               <div
                 onClick={() => setIsHoveredCountry(!isHoveredCountry)}
                 className={ isCountry ? 'text-[#f23f51] relative px-2 cursor-pointer' : 'relative duration-300 px-2 cursor-pointer text-white hover:text-[#f23f51]'}
@@ -142,8 +144,8 @@ const Header = () => {
                   )}
                 </div>
               </div>
-              <Link href={'/favorite'} onClick={() => setOpenMenu(false)} className={path === '/favorite' ? 'text-[#f23f51] px-4 py-2' :"px-4 py-2"}><Favorite /></Link>
-              <Link href={'/search'} onClick={() => setOpenMenu(false)} className={path === '/search' ? 'text-[#f23f51] px-4 py-2' :"px-4 py-2"}><Search /></Link>
+              <Link href={PATH_FAVORITE} onClick={() => setOpenMenu(false)} className={path === PATH_FAVORITE ? 'text-[#f23f51] px-4 py-2' :"px-4 py-2"}><Favorite /></Link>
+              <Link href={PATH_SEARCH} onClick={() => setOpenMenu(false)} className={path === PATH_SEARCH ? 'text-[#f23f51] px-4 py-2' :"px-4 py-2"}><Search /></Link>
             </div>
           }
         </div>

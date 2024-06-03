@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect } from "react";
 import CardFilm from "@/src/components/CardFilm"; 
 import Pagination from "@/src/components/Pagination";
 import { useCounterStore } from "@/src/providers/counter-store-provider";
@@ -16,6 +16,10 @@ const SeriesMovies = () => {
     setPrevPage: state.setPrevPage,
     setNextPage: state.setNextPage,
   }));
+
+  useEffect(()=>{
+    setPage(1)
+  },[])
 
   useEffect(()=>{
     fetchDataSeriesMovies()

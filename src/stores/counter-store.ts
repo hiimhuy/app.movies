@@ -31,6 +31,7 @@ export type FetchDataState = {
     poster_url: string;
     name: string;
   }[];
+  dataSearch: any;
 };
 
 export type FetchDataActions = {
@@ -82,6 +83,7 @@ export const defaultInitState: FetchDataState = {
   dataCategory: null,
   episode: 1,
   listFavorite: [],
+  dataSearch: null,
 };
 
 export const createCounterStore = (
@@ -176,7 +178,7 @@ export const createCounterStore = (
       set({ loading: true, error: null });
       try {
         const response = await getDataSearch(keyword, limit);
-        set({ data: response, loading: false });
+        set({ dataSearch: response, loading: false });
       } catch (error: any) {
         set({ error: error.message, loading: false });
       }

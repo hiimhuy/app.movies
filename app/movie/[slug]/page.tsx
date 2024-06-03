@@ -17,6 +17,7 @@ const FilmDetail = () => {
       setEpisode: state.setEpisode,
     })
   );
+  
   useEffect(() => {
     setSlug(slug);
     getDataMovie();

@@ -19,10 +19,12 @@ const CartoonPage = () => {
   }));
 
   useEffect(()=>{
+    setPage(1)
+  },[])
+
+  useEffect(()=>{
     fetchDataCartoonMovies()
   },[page])
-
-  console.log(data)
 
   return (
    <>
