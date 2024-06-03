@@ -18,6 +18,10 @@ const TVShowsPage: React.FC = () => {
   }));
 
   useEffect(()=>{
+    setPage(1)
+  },[])
+
+  useEffect(()=>{
     fetchDataTVShows()
   },[page])
 

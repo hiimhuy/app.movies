@@ -1,11 +1,9 @@
 'use client'
 
-import { getDataSingleMovies } from '@/src/api';
 import CardFilm from '@/src/components/CardFilm';
 import Pagination from '@/src/components/Pagination';
-import { IMovie } from '@/src/model/type';
 import { useCounterStore } from '@/src/providers/counter-store-provider';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 
 const SingleMoviesPage = () => {
   const { data, loading, error, fetchDataSingleMovies, page, setPage, setPrevPage, setNextPage } = useCounterStore((state) => ({
@@ -18,6 +16,10 @@ const SingleMoviesPage = () => {
     setPrevPage: state.setPrevPage,
     setNextPage: state.setNextPage,
   }));
+
+  useEffect(()=>{
+    setPage(1)
+  },[])
 
   useEffect(()=>{
     fetchDataSingleMovies()

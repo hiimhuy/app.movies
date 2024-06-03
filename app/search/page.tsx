@@ -9,8 +9,8 @@ import Link from 'next/link';
 import React, {Suspense } from 'react';
 
 const SearchPage = () => {
-  const {data, getDataSearch, limit, page, keyword, setKeyword, setPage, setNextPage, setPrevPage} = useCounterStore((state) =>({
-    data: state.data,
+  const {dataSearch, getDataSearch, limit, page, keyword, setKeyword, setPage, setNextPage, setPrevPage} = useCounterStore((state) =>({
+    dataSearch: state.dataSearch,
     keyword: state.keyword,
     getDataSearch: state.getDataSearch,
     limit: state.limit,
@@ -32,8 +32,8 @@ const SearchPage = () => {
 
   return (
     <>
-      <title>{data?.data?.titlePage}</title>
-      <meta name="description" content={data?.data?.seoOnPage?.descriptionHead} />
+      <title>{dataSearch?.data?.titlePage}</title>
+      <meta name="description" content={dataSearch?.data?.seoOnPage?.descriptionHead} />
       <div className='text-white'>
         <form onSubmit={handleSubmit}>
           <div className="flex gap-2">
@@ -50,8 +50,8 @@ const SearchPage = () => {
             <button className='w-40 bg-[#f23f51] hover:bg-red-600' type='submit'>Tìm kiếm</button>
           </div>
         </form>
-        <p className='py-4 font-semibold text-2xl text-[#f23f51]'>{data?.data?.titlePage}</p>
-        {data?.data?.items[0] ? data?.data?.items?.map((film: IDescription) => (
+        <p className='py-4 font-semibold text-2xl text-[#f23f51]'>{dataSearch?.data?.titlePage}</p>
+        {dataSearch?.data?.items[0] ? dataSearch?.data?.items?.map((film: IDescription) => (
           <Link key={film?._id} href={`/movie/${film?.slug}`} className='p-2'>
             <div className='flex gap-8'>
               <Image src={`https://img.phimapi.com/${film?.thumb_url}`} loading='lazy' height={40} width={40} alt='img' className='w-32 h-40 rounded-sm object-cover' />
@@ -64,8 +64,8 @@ const SearchPage = () => {
             </div>
           </Link>
         )) : <p>Không tìm thấy phim!</p>}
-          {data && <div className="flex justify-center mt-5">
-              <Pagination currentPage={page} totalPages={data?.params?.pagination?.totalPages || 1} onPageChange={setPage} nextPage={setNextPage} prevPage={setPrevPage} />
+          {dataSearch && <div className="flex justify-center mt-5">
+              <Pagination currentPage={page} totalPages={dataSearch?.params?.pagination?.totalPages || 1} onPageChange={setPage} nextPage={setNextPage} prevPage={setPrevPage} />
             </div>}
       </div>
     </>
